@@ -1,0 +1,30 @@
+{
+  "scripts": {
+    "test": "jest --watch --verbose",
+    "server": "nodemon index.js",
+    "start": "knex migrate:rollback && knex migrate:latest && knex seed:run && node index.js"
+  },
+  "engines": {
+    "node": "10.15.0"
+  },
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "bcryptjs": "^2.4.3",
+    "connect-session-knex": "^1.4.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "express-session": "^1.16.2",
+    "helmet": "^3.18.0",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.17.6",
+    "knex-cleaner": "^1.1.4",
+    "node": "^12.4.0",
+    "pg": "^7.11.0",
+    "sqlite3": "^4.0.9"
+  },
+  "devDependencies": {
+    "jest": "^24.8.0",
+    "nodemon": "^1.19.1"
+  }
+}
