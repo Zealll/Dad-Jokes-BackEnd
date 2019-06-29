@@ -31,5 +31,48 @@ router.get('/all', restricted, (req, res) => {
     .catch(err => res.status(500).json({error: err}))
 })
 
+router.put('/updatePUT', restricted, (req, res) => {
+    //Matches the ID automatically
+    const token = req.headers.authorization
+    req.decodedJWT = jsonWT.decode(token)
+    const id = req.decodedJWT.subject
+    // const id = req.params.id
+    const body = req.body
+
+    helpers
+    .editUser(id, body)
+    .then(updated => {
+        res.status(200).json({mesage: 'User updated Successfully'})
+    })
+    .catch(err => res.status(500).json({error: err}))
+})
+
+router.patch('/updatePATCH', restricted, (req, res) => {
+    const token = req.headers.authorization
+    req.decodedJWT = jsonWT.decode(token)
+    const id = req.decodedJWT.subject
+    const body = req.body
+
+    helpers
+    .editUser(id, body)
+    .then(updated => {
+        res.status(200).json({mesage: 'User updated Successfully'})
+    })
+    .catch(err => res.status(500).json({error: err}))
+})
+
+
+//deletes the USER, but keeps the jokes associated with the user
+router.delete('/delete', restricted, (req, res) => {
+    const token = req.headers.authorization
+    req.decodedJWT = jsonWT.decode(token)
+    const id = req.decodedJWT.subject
+
+    helpers
+    .deleteUser(id)
+    .then(deleted => res.status(200).json({message: 'Account was successfully terminated!'}))
+    .catch(err => res.status(500).json({error: err}))
+})
+
 
 module.exports = router

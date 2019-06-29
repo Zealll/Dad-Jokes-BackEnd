@@ -13,6 +13,8 @@ router.post('/register', (req, res) => {
 
     if(!user.email.includes('@')) {
         res.status(403).send("Please make sure you entered correct e-mail address")
+    } else if(!user.firstName || !user.lastName || !user.email || !user.password){
+        res.status(403).json('You need to fill out all the required input fields!')
     } else {
         helpers
         .insert(user)

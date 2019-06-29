@@ -5,7 +5,10 @@ module.exports = {
     get,
     insert,
     findBy,
-    getJokes
+    editUser,
+    deleteUser,
+    getJokes,
+    insertJoke
 }
 
 function get() {
@@ -23,6 +26,18 @@ function findBy(credentials) {
     .where(credentials)
 }
 
+function editUser(id, user) {
+    return db('users')
+    .where({ id })
+    .update(user)
+}
+
+function deleteUser(id) {
+    return db('users')
+    .where({ id })
+    .del()
+}
+
 
 
 
@@ -30,4 +45,10 @@ function findBy(credentials) {
 
 function getJokes() {
     return db('jokes')
+}
+
+function insertJoke(joke) {
+    return db('jokes')
+    .insert(joke)
+    .then(ids => ids[0])
 }
