@@ -11,13 +11,16 @@ router.post('/register', (req, res) => {
     const hash = bcrypt.hashSync(user.password, 4)
     user.password = hash
 
-    if(user.email.includes('@')) {
+    if(!user.email.includes('@')) {
         res.status(403).send("Please make sure you entered correct e-mail address")
     } else {
         helpers
         .insert(user)
-        .then(registered => res.status(201).json(registered))
-        .catch(error => req.status(500).json(error))
+        .then(registered => {
+            res.status(201).json(`Register Successful! User ID is ${registered}`)
+            console.log(registered)
+        })
+        .catch(error => res.status(500).json(error))
     }
 })
 
