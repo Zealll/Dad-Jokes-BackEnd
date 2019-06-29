@@ -6,7 +6,6 @@ exports.up = function(knex, Promise) {
       tbl.string('lastName', 100).notNullable()
       tbl.string('email', 100).notNullable().unique()
       tbl.varchar('password', 200).notNullable()
-      tbl.integer('age').notNullable()
   })
 };
 

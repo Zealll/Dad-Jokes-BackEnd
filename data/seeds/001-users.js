@@ -6,15 +6,13 @@ exports.seed = function(knex, Promise) {
           firstName: 'Elan',
           lastName: 'Riznis',
           email: 'elan@gmail.com',
-          password: 'password1',
-          age: 23
+          password: 'password1'
         },
         {
           firstName: 'Andy',
           lastName: 'Dillon',
           email: 'andy@gmail.com',
-          password: 'password2',
-          age: 30
+          password: 'password2'
         }
       ]);
     });

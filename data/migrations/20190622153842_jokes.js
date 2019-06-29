@@ -8,7 +8,8 @@ exports.up = function(knex, Promise) {
       .unsigned()
       .references('id')
       .inTable('users')
-      .onDelete('CASCADE')
+      .onDelete('SET NULL')
+      //There is also RESTRICT 
       .onUpdate('CASCADE')
   })
 };
