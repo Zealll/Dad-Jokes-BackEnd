@@ -7,8 +7,15 @@ module.exports = {
     findBy,
     editUser,
     deleteUser,
+    // deleteUserAndJokes,
     getJokes,
-    insertJoke
+    insertJoke,
+    deleteJokes,
+    editJoke,
+    getLikes,
+    addLikes,
+    editLikes,
+    deleteLikes
 }
 
 function get() {
@@ -38,6 +45,16 @@ function deleteUser(id) {
     .del()
 }
 
+// function deleteUserAndJokes(id) {
+//     return db('jokes as j')
+//     .join('users as u', 'u.id', 'j.user_id')
+//     .where('j.user_id', id)
+//     // .andWhere('j.user_id', id)
+//     .del()
+    
+// }
+
+
 
 
 
@@ -51,4 +68,41 @@ function insertJoke(joke) {
     return db('jokes')
     .insert(joke)
     .then(ids => ids[0])
+}
+
+function deleteJokes(id) {
+    return db('jokes')
+    .where({ id })
+    .del()
+}
+
+function editJoke(id, joke) {
+    return db('jokes')
+    .where({ id })
+    .update(joke)
+}
+
+
+//LIKED TABLE HELPERS
+
+function getLikes() {
+    return db('liked')
+}
+
+function addLikes(like) {
+    return db('liked')
+    .insert(like)
+    .then(ids => ids[0])
+}
+
+function editLikes(id, like) {
+    return db('liked')
+    .where({ id })
+    .update(like)
+}
+
+function deleteLikes(id) {
+    return db('liked')
+    .where({ id })
+    .del()
 }

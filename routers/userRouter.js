@@ -31,6 +31,23 @@ router.get('/all', restricted, (req, res) => {
     .catch(err => res.status(500).json({error: err}))
 })
 
+router.get('/userWithJokes', restricted, (req, res) => {
+    const id = req.decodedJWT.subject
+
+    db('users as u')
+    .where({ id })
+    .then(users => {
+        db('jokes as j')
+        .where('j.user_id', id)
+        .then(jokes => res.status(200).json(users.map(user => {
+            return {
+                ...user,
+                jokes: jokes
+            }
+        })))
+    })
+})
+
 router.put('/updatePUT', restricted, (req, res) => {
     //Matches the ID automatically
     const token = req.headers.authorization
@@ -42,10 +59,14 @@ router.put('/updatePUT', restricted, (req, res) => {
     helpers
     .editUser(id, body)
     .then(updated => {
+        if(!updated) {
+            res.status(403).json({ message: `User with an ID of ${id} does NOT exist`})
+        }
         res.status(200).json({mesage: 'User updated Successfully'})
     })
     .catch(err => res.status(500).json({error: err}))
 })
+
 
 router.patch('/updatePATCH', restricted, (req, res) => {
     const token = req.headers.authorization
@@ -56,6 +77,9 @@ router.patch('/updatePATCH', restricted, (req, res) => {
     helpers
     .editUser(id, body)
     .then(updated => {
+        if(!updated) {
+            res.status(403).json({ message: `User with an ID of ${id} does NOT exist`})
+        }
         res.status(200).json({mesage: 'User updated Successfully'})
     })
     .catch(err => res.status(500).json({error: err}))
@@ -70,9 +94,27 @@ router.delete('/delete', restricted, (req, res) => {
 
     helpers
     .deleteUser(id)
-    .then(deleted => res.status(200).json({message: 'Account was successfully terminated!'}))
+    .then(deleted => {
+        if(!deleted) {
+            res.status(403).json({ message: `User with an ID of ${id} does NOT exist`})
+        }
+        res.status(200).json({message: 'Account was successfully terminated!'})
+    })
     .catch(err => res.status(500).json({error: err}))
 })
+
+
+// ===========WORK ON THIS LATER!!!!!!!================
+// router.delete('/deleteBOTH', restricted, (req, res) => {
+//     const token = req.headers.authorization
+//     req.decodedJWT = jsonWT.decode(token)
+//     const id = req.decodedJWT.subject
+
+//     helpers
+//     .deleteUserAndJokes(id)
+//     .then(deleted => res.status(200).json(deleted))
+//     .catch(err => res.status(500).json({error: err}))
+// })
 
 
 module.exports = router

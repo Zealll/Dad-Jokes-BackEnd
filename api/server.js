@@ -6,6 +6,7 @@ const cors = require('cors')
 const userRouter = require('../routers/userRouter')
 const authRouter = require('../routers/authRouter')
 const jokeRouter = require('../routers/jokeRouter')
+const likedROuter = require('../routers/likedRouter')
 
 server.use(express.json())
 server.use(helmet())
@@ -22,6 +23,7 @@ server.get('/', (req, res) => {
 server.use('/api/users', userRouter)
 server.use('/api/auth', authRouter)
 server.use('/api/jokes', jokeRouter)
+server.use('/api/liked', likedROuter)
 
 
 module.exports = server

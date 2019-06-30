@@ -35,5 +35,49 @@ router.post('/add', restricted, (req, res) => {
     .catch(err => res.status(500).json({error: err}))
 })
 
+router.put('/editPUT/:id', restricted, (req, res) => {
+    const id = req.params.id
+    const body = req.body
+
+    helpers
+    .editJoke(id, body)
+    .then(updated => {
+        if(!updated) {
+            res.status(403).json({ message: `Joke with an ID of ${id} does NOT exist`})
+        }
+        res.status(200).json(updated)
+    })
+    .catch(err => res.status(500).json({ error: err }))
+})
+
+router.patch('/editPATCH/:id', restricted, (req, res) => {
+    const id = req.params.id
+    const body = req.body
+
+    helpers
+    .editJoke(id, body)
+    .then(updated => {
+        if(!updated) {
+            res.status(403).json({ message: `Joke with an ID of ${id} does NOT exist`})
+        }
+        res.status(200).json(updated)
+    })
+    .catch(err => res.status(500).json({ error: err }))
+})
+
+router.delete('/delete/:id', restricted, (req, res) => {
+    const id = req.params.id
+
+    helpers
+    .deleteJokes(id)
+    .then(deleted => {
+        if(!deleted) {
+            res.status(403).json({ message: `Joke with an ID of ${id} does NOT exist`})
+        }
+        res.status(200).json({ message: 'Joke successfully deleted!' })
+    })
+    .catch(err =>  res.status(500).json({ error: err }))
+})
+
 
 module.exports = router
