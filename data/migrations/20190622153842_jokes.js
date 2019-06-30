@@ -4,6 +4,7 @@ exports.up = function(knex, Promise) {
       tbl.increments()
       tbl.string('author', 100).notNullable()
       tbl.string('joke', 5000).notNullable()
+      tbl.integer('likes').notNullable()
       tbl.integer('user_id')
       .unsigned()
       .references('id')
