@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 })
 
 //Getting jokes that belong to the LOGGED IN User
-router.get('/userjokes', restricted, (req, res) => {
+router.get('/userJokes', restricted, (req, res) => {
     const id = req.decodedJWT.subject 
 
     db('jokes as j')
@@ -31,7 +31,7 @@ router.post('/add', restricted, (req, res) => {
 
     helpers
     .insertJoke(joke)
-    .then(joke => res.status(200).json(joke))
+    .then(joke => res.status(201).json(joke))
     .catch(err => res.status(500).json({error: err}))
 })
 
@@ -43,7 +43,7 @@ router.put('/editPUT/:id', restricted, (req, res) => {
     .editJoke(id, body)
     .then(updated => {
         if(!updated) {
-            res.status(403).json({ message: `Joke with an ID of ${id} does NOT exist`})
+            res.status(404).json({ message: `Joke with an ID of ${id} does NOT exist`})
         }
         res.status(200).json(updated)
     })
@@ -58,7 +58,7 @@ router.patch('/editPATCH/:id', restricted, (req, res) => {
     .editJoke(id, body)
     .then(updated => {
         if(!updated) {
-            res.status(403).json({ message: `Joke with an ID of ${id} does NOT exist`})
+            res.status(404).json({ message: `Joke with an ID of ${id} does NOT exist`})
         }
         res.status(200).json(updated)
     })
@@ -72,7 +72,7 @@ router.delete('/delete/:id', restricted, (req, res) => {
     .deleteJokes(id)
     .then(deleted => {
         if(!deleted) {
-            res.status(403).json({ message: `Joke with an ID of ${id} does NOT exist`})
+            res.status(404).json({ message: `Joke with an ID of ${id} does NOT exist`})
         }
         res.status(200).json({ message: 'Joke successfully deleted!' })
     })

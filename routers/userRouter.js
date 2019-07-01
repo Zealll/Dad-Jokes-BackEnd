@@ -60,7 +60,7 @@ router.put('/updatePUT', restricted, (req, res) => {
     .editUser(id, body)
     .then(updated => {
         if(!updated) {
-            res.status(403).json({ message: `User with an ID of ${id} does NOT exist`})
+            res.status(404).json({ message: `User with an ID of ${id} does NOT exist`})
         }
         res.status(200).json({mesage: 'User updated Successfully'})
     })
