@@ -27,7 +27,7 @@ router.post('/add', restricted, (req, res) => {
 
     helpers
     .addLikes(body)
-    .then(added => res.status(200).json(added))
+    .then(added => res.status(201).json(added))
     .catch(err => res.status(500).json({ error: err }))
 })
 
@@ -39,7 +39,7 @@ router.put('/editPUT/:id', restricted, (req, res) => {
     .editLikes(id, body)
     .then(updated => {
         if(!updated){
-            res.status(403).json({ message: `Table with an ID of ${id} does NOT exist`})
+            res.status(404).json({ message: `Table with an ID of ${id} does NOT exist`})
         }
         res.status(200).json({ message: 'Successfully Upated!!'})
     })
@@ -54,7 +54,7 @@ router.patch('/editPATCH/:id', restricted, (req, res) => {
     .editLikes(id, body)
     .then(updated => {
         if(!updated){
-            res.status(403).json({ message: `Table with an ID of ${id} does NOT exist`})
+            res.status(404).json({ message: `Table with an ID of ${id} does NOT exist`})
         }
         res.status(200).json({ message: 'Successfully Upated!!'})
     })
@@ -68,7 +68,7 @@ router.delete('/delete/:id', restricted, (req, res) => {
     .deleteLikes(id)
     .then(deleted => {
         if(!deleted) {
-            res.status(403).json({ message: `Table with an ID of ${id} does NOT exist`})
+            res.status(404).json({ message: `Table with an ID of ${id} does NOT exist`})
         }
         res.status(200).json({ message: 'Successfully Updated' })
     })
