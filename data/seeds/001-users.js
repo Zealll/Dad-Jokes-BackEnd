@@ -1,18 +1,14 @@
 
 exports.seed = function(knex, Promise) {
+  // Deletes ALL existing entries
   return knex('users').del().then(function () {
+      // Inserts seed entries
       return knex('users').insert([
         {
           firstName: 'Elan',
           lastName: 'Riznis',
           email: 'elan@gmail.com',
-          password: 'password1'
-        },
-        {
-          firstName: 'Andy',
-          lastName: 'Dillon',
-          email: 'andy@gmail.com',
-          password: 'password2'
+          password: 'pass'
         }
       ]);
     });
