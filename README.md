@@ -169,7 +169,7 @@ API DOCUMENTATIONS:
 
 =======================================================================================
 ### **get logged in user's information**
-*method url*: `/api/users/andiviudal`
+*method url*: `/api/users/individual`
 
 *http method*: **[GET]**
 #### Headers
